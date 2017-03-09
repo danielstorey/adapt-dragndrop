@@ -1,0 +1,32 @@
+{
+    "_id": "c-01",
+    "_parentId": "b-01",
+    "_type": "component",
+    "_component": "dragndrop",
+    "_classes": "",
+    "_layout": "full",
+    "_attempts": 1,
+    "_questionWeight": 100,
+    "title": "Superhero Colours",
+    "displayTitle": "Colourful Characters",
+    "body": "Do you know what colour these well-known superheroes are? Drag the items below into the correct slots",
+    "instruction": "",
+    "_items": [
+        {
+            "text": "What colour is The Hulk?",
+            "accepted": "Green"
+        },
+        {
+            "text": "What colour is Spiderman?",
+            "accepted": ["Red", "Blue"]
+        },
+        {
+            "text": "What colour is Wolverine?",
+            "accepted": "Yellow"
+        }
+
+    ],
+    "dummyAnswers": ["Black", "Brown"],
+    "animationTime": 800,
+    "animationDelay": 100
+}
