@@ -42,12 +42,12 @@ define(function(require) {
 
 		setupDragAndDropItems : function () {
 
-			$(".dragndrop-answer").draggable({containment: this.$(".dragndrop-inner")});
+			this.$(".dragndrop-answer").draggable({containment: this.$(".dragndrop-inner")});
 
 			//Activate droppables and set heights from draggable heights
 			var hItem = this.$(".dragndrop-answer").height();
 
-			$(".dragndrop-droppable").droppable({
+			this.$(".dragndrop-droppable").droppable({
 				activeClass: "ui-state-active",
 				tolerance: "intersect"
 			}).height(hItem);
@@ -282,7 +282,11 @@ define(function(require) {
 		},
 
 		disableDraggableAnswers: function() {
-			this.$('.dragndrop-answers').children().draggable('disable');
+			this.$(".dragndrop-answers").children().draggable("disable");
+		},
+		
+		enableDraggableAnswers: function() {
+			this.$(".dragndrop-answers").children().draggable("enable");
 		},
 
 		markAnswers: function() {
@@ -304,6 +308,7 @@ define(function(require) {
 
 			this.$(".dragndrop-question").removeClass("correct incorrect");
 			this.$(".ui-droppable").removeClass("ui-state-disabled");
+			this.enableDraggableAnswers();
 
 			_.each(this.$(".ui-state-placed"), function(draggable) {
 				this.resetDraggable($(draggable));
