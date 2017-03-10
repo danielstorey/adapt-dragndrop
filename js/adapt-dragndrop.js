@@ -1,9 +1,9 @@
 define(function(require) {
 
-	var Adapt           = require('coreJS/adapt');
-	var QuestionView    = require('coreViews/questionView');
-	var JQueryUI        =  require('./jquery-ui.js');
-	var TouchPunch      = require('./jquery.ui.touch-punch.js')
+	var Adapt           = require("coreJS/adapt");
+	var QuestionView    = require("coreViews/questionView");
+	var JQueryUI        =  require("./jquery-ui.js");
+	var TouchPunch      = require("./jquery.ui.touch-punch.js")
 
 	var dragndrop = QuestionView.extend({
 
@@ -267,39 +267,30 @@ define(function(require) {
 		},
 
 		showMarking: function() {
-			_.each(this.model.get('_items'), function(item, i) {
-				var $question = this.$('.dragndrop-question').eq(i);
-				$question.removeClass('correct incorrect').addClass(item._isCorrect ? 'correct' : 'incorrect');
+			_.each(this.model.get("_items"), function(item, i) {
+				var $question = this.$(".dragndrop-question").eq(i);
+				$question.removeClass("correct incorrect").addClass(item._isCorrect ? "correct" : "incorrect");
 			}, this);
 		},
 
 		isCorrect: function() {
 			this.markAnswers();
-			this.disableDraggableAnswers();
 
 			// do we have any _isCorrect == false?
 			return !_.contains(_.pluck(this.model.get("_items"),"_isCorrect"), false);
 		},
 
-		disableDraggableAnswers: function() {
-			this.$(".dragndrop-answers").children().draggable("disable");
-		},
-		
-		enableDraggableAnswers: function() {
-			this.$(".dragndrop-answers").children().draggable("enable");
-		},
-
 		markAnswers: function() {
 			var numberOfCorrectAnswers = 0;
-			this.model.set('_isAtLeastOneCorrectSelection', false);
-			_.each(this.model.get('_items'), function(item) {
+			this.model.set("_isAtLeastOneCorrectSelection", false);
+			_.each(this.model.get("_items"), function(item) {
 
 				item._isCorrect = item.accepted.sort().join() === item._userAnswer.sort().join();
 
 				if (item._isCorrect) {
 					numberOfCorrectAnswers ++;
-					this.model.set('_numberOfCorrectAnswers', numberOfCorrectAnswers);
-					this.model.set('_isAtLeastOneCorrectSelection', true);
+					this.model.set("_numberOfCorrectAnswers", numberOfCorrectAnswers);
+					this.model.set("_isAtLeastOneCorrectSelection", true);
 				}
 			}, this);
 		},
@@ -308,7 +299,6 @@ define(function(require) {
 
 			this.$(".dragndrop-question").removeClass("correct incorrect");
 			this.$(".ui-droppable").removeClass("ui-state-disabled");
-			this.enableDraggableAnswers();
 
 			_.each(this.$(".ui-state-placed"), function(draggable) {
 				this.resetDraggable($(draggable));
@@ -328,7 +318,7 @@ define(function(require) {
 		},
 
 		disableButtonActions: function(val) {
-			this.$('.buttons-action').prop('disabled', val);
+			this.$(".buttons-action").prop("disabled", val);
 		},
 
 		showAnswer: function(showUserAnswer) {
@@ -414,21 +404,21 @@ define(function(require) {
 		},
 
 		setScore: function() {
-			var numberOfCorrectAnswers = this.model.get('_numberOfCorrectAnswers') || 0;
+			var numberOfCorrectAnswers = this.model.get("_numberOfCorrectAnswers") || 0;
 			var questionWeight = this.model.get("_questionWeight");
-			var itemLength = this.model.get('_items').length;
+			var itemLength = this.model.get("_items").length;
 
 			var score = questionWeight * numberOfCorrectAnswers / itemLength;
 
-			this.model.set('_score', score);
+			this.model.set("_score", score);
 		},
 
 		disableQuestion: function() {
-			this.$('.draganddrop-answers').children().draggable('enable');
+			this.$(".dragndrop-answers").children().draggable("disable");
 		},
 
 		enableQuestion: function() {
-			this.$('.draganddrop-answers').children().draggable('enable');
+			this.$(".dragndrop-answers").children().draggable("enable");
 		}
 	});
 
