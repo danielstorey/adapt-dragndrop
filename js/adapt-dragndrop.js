@@ -1,9 +1,9 @@
 define(function(require) {
 
-	var Adapt           = require("coreJS/adapt");
-	var QuestionView    = require("coreViews/questionView");
-	var JQueryUI        =  require("./jquery-ui.js");
-	var TouchPunch      = require("./jquery.ui.touch-punch.js")
+	var Adapt = require("coreJS/adapt");
+	var QuestionView = require("coreViews/questionView");
+	var JQueryUI = require("./jquery-ui.js");
+	var TouchPunch = require("./jquery.ui.touch-punch.js")
 
 	var dragndrop = QuestionView.extend({
 
@@ -14,9 +14,7 @@ define(function(require) {
 			"dragstop .ui-draggable": "onDragStop",
 			"drop .ui-droppable": "onDrop",
 			"dropout .ui-droppable": "onDropOut",
-			"dropover .ui-droppable": "onDropOver",
-
-			"click .dragndrop-widget .button.reset": "onResetClicked"
+			"dropover .ui-droppable": "onDropOver"
 		},
 
 		/************************************** SETUP METHODS **************************************/
