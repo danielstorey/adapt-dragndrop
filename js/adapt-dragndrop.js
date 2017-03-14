@@ -2,8 +2,8 @@ define(function(require) {
 
 	var Adapt = require("coreJS/adapt");
 	var QuestionView = require("coreViews/questionView");
-	var JQueryUI = require("./jquery-ui.js");
-	var TouchPunch = require("./jquery.ui.touch-punch.js")
+	var JQueryUI = require("./jquery-ui.min");
+	var TouchPunch = require("./jquery.ui.touch-punch")
 
 	var dragndrop = QuestionView.extend({
 
@@ -34,18 +34,26 @@ define(function(require) {
 
 		onQuestionRendered: function() {
 			this.setupDragAndDropItems();
-			//this.restoreUserAnswer();
+			this.restoreUserAnswer();
 			this.setReadyStatus();
 		},
 
 		setupDragAndDropItems : function () {
 
-			this.$(".dragndrop-answer").draggable({containment: this.$(".dragndrop-inner")});
+			var $draggables = this.$(".dragndrop-answer");
+			var $droppables = this.$(".dragndrop-droppable");
+
+			$draggables.draggable({
+				containment: this.$(".dragndrop-inner"),
+				snap: ".ui-state-enabled",
+				snapMode: "inner",
+				snapTolerance: 12
+			});
 
 			//Activate droppables and set heights from draggable heights
-			var hItem = this.$(".dragndrop-answer").height();
+			var hItem = $draggables.height();
 
-			this.$(".dragndrop-droppable").droppable({
+			$droppables.droppable({
 				activeClass: "ui-state-active",
 				tolerance: "intersect"
 			}).height(hItem);
@@ -56,7 +64,7 @@ define(function(require) {
 			$items.width(wMax);
 
 			// Store original position of draggables
-			_.each(this.$(".ui-draggable"), function (draggable) {
+			_.each($draggables, function (draggable) {
 				var $draggable = $(draggable);
 				$draggable.data({
 					originalPosition: {top: 0, left: 0},
@@ -228,8 +236,8 @@ define(function(require) {
 
 			var dragLeft = $draggable.data("position") ? $draggable.data("position").left : $draggable.position().left;
 			var dragTop = $draggable.data("position") ? $draggable.data("position").top : $draggable.position().top;
-			var left = $droppable.position().left - dragLeft + parseInt($droppable.css("border-left-width"));
-			var top = $droppable.position().top - dragTop + parseInt($droppable.css("border-top-width"));
+			var left = $droppable.position().left - dragLeft;
+			var top = $droppable.position().top - dragTop;
 
 			$draggable.animate({left: left, top: top}, animationTime);
 			$droppable.removeClass("ui-state-enabled")
