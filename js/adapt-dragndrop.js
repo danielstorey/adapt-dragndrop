@@ -72,7 +72,7 @@ define(function(require) {
 				var $draggable = $(draggable);
 				$draggable.data({
 					originalPosition: {top: 0, left: 0},
-					position: $draggable.position()
+					position: $draggable.offset()
 				});
 			});
 		},
@@ -275,10 +275,10 @@ define(function(require) {
 
 			$draggable.removeClass("ui-state-placed");
 
-			var dragLeft = $draggable.data("position") ? $draggable.data("position").left : $draggable.position().left;
-			var dragTop = $draggable.data("position") ? $draggable.data("position").top : $draggable.position().top;
-			var left = $droppable.position().left - dragLeft;
-			var top = $droppable.position().top - dragTop;
+			var dragLeft = $draggable.data("position") ? $draggable.data("position").left : $draggable.offset().left;
+			var dragTop = $draggable.data("position") ? $draggable.data("position").top : $draggable.offset().top;
+			var left = $droppable.offset().left - dragLeft;
+			var top = $droppable.offset().top - dragTop;
 
 			$draggable.animate({left: left, top: top}, animationTime);
 			$droppable.removeClass("ui-state-enabled")
@@ -304,7 +304,6 @@ define(function(require) {
 			$draggable.animate(position, animationTime)
 				.removeClass("ui-state-placed")
 				.data("droppable", null);
-
 		},
 
 		/************************************** QUESTION METHODS **************************************/
@@ -421,7 +420,7 @@ define(function(require) {
 				var t = i * delay;
 				var that = this;
 				setTimeout(function() {
-					$.drop ? that.placeDraggable($.drag, $.drop) : that.resetDraggable($.drag);
+					$.drop ? that.placeDraggable($.drag, $.drop, 600) : that.resetDraggable($.drag, null, 600);
 				}, t);
 			}, this);
 
