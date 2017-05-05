@@ -1,31 +1,35 @@
 <div class="dragndrop-inner component-inner">
-	{{> component this}}
-	<div class="dragndrop-widget component-widget {{#unless _isEnabled}} disabled {{#if _isComplete}} complete submitted user {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
+    {{> component this}}
+    <div class="dragndrop-widget component-widget {{#unless _isEnabled}} disabled {{#if _isComplete}} complete submitted user {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
 
-		<div class="dragndrop-container">
+        <div class="dragndrop-container">
 
-			<div class="dragndrop-overlay"></div>
+            <div class="dragndrop-overlay"></div>
 
-			<div class="dragndrop-questions">
-				{{#each _items}}
-					<div class="dragndrop-question">
-						<div class="dragndrop-question-text">{{this.text}}</div>
-						{{#each accepted}}
-							<div class="dragndrop-item dragndrop-droppable ui-state-enabled"></div>
-						{{/each}}
-					</div>
-				{{/each}}
-			</div>
+            <div class="dragndrop-questions">
+                {{#each _items}}
+                    <div class="dragndrop-question">
+                        <div class="dragndrop-question-text">{{this.text}}</div>
+                        {{#each accepted}}
+                            <div class="dragndrop-item dragndrop-droppable ui-state-enabled"></div>
+                        {{/each}}
+                        <div class="dragndrop-question-state">
+                            <div class="dragndrop-correct-icon icon icon-tick"></div>
+                            <div class="dragndrop-incorrect-icon icon icon-cross"></div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
 
-			<div class="dragndrop-answers clearfix">
-				{{#each _possibleAnswers}}
-					<div class="dragndrop-item dragndrop-answer">{{{this}}}</div>
-				{{/each}}
-			</div>
+            <div class="dragndrop-answers clearfix">
+                {{#each _possibleAnswers}}
+                    <div class="dragndrop-item dragndrop-answer">{{{this}}}</div>
+                {{/each}}
+            </div>
 
-		</div>
+        </div>
 
-		<div class="buttons">
-		</div>
-	</div>
+        <div class="buttons">
+        </div>
+    </div>
 </div>
