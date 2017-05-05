@@ -32,15 +32,11 @@ guide the learner’s interaction with the component.
 
 **_items** (string): Each item represents a question for this component and contains values for **_text** and **accepted**.
 
->**_text** (string): The text to be displayed for the question.
+>**text** (string): The text to be displayed for the question.
 
 >**accepted** (mixed): Accepted answers can either be a string for a single answer or an array for multiple answers.
 
 **dummyAnswers** (array): Optional dummy answers to add to the mix.
-
-**animationTime** (number): The time in ms for the animations to take place. Default is 200.
-
-**animationDelay** (number): The delay in between answers being animated when switching between the learner's answer and the correct answer. Default is 0 - all answers move at the same time.
 
 ### Accessibility
 

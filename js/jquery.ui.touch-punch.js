@@ -33,6 +33,8 @@
       _mouseDestroy = mouseProto._mouseDestroy,
       touchHandled;
 
+  console.log(mouseProto._touchStart);
+
   /**
    * Simulate a mouse event based on a corresponding touch event
    * @param {Object} event A touch event
@@ -186,5 +188,7 @@
     // Call the original $.ui.mouse destroy method
     _mouseDestroy.call(self);
   };
+
+    console.log(mouseProto._touchStart);
 
 }));

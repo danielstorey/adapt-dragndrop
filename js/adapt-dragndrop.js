@@ -3,7 +3,7 @@ define(function(require) {
 	var Adapt = require("coreJS/adapt");
 	var QuestionView = require("coreViews/questionView");
 	var JQueryUI = require("./jquery-ui.min");
-	var TouchPunch = require("./jquery.ui.touch-punch")
+	var TouchPunch = require("./jquery.ui.touch-punch");
 
 	var dragndrop = QuestionView.extend({
 
@@ -20,6 +20,10 @@ define(function(require) {
 		/************************************** SETUP METHODS **************************************/
 
 		setupQuestion: function() {
+            this.containerClass = ".dragndrop-widget";
+            this.$scrollElement = $(window);
+            this.animationTime = 300;
+            this.animationDelay = 100;
 
 			// Create a single, random array of all available answers
 			var possibleAnswers = _.shuffle(this.getAnswers(true));
@@ -44,7 +48,7 @@ define(function(require) {
 			var $droppables = this.$(".dragndrop-droppable");
 
 			$draggables.draggable({
-				containment: this.$(".dragndrop-inner"),
+				containment: this.containerClass,
 				snap: ".ui-state-enabled",
 				snapMode: "inner",
 				snapTolerance: 12
@@ -154,6 +158,8 @@ define(function(require) {
 
 			if (!this.model.get("_isEnabled")) return;
 
+			this.winHeight = this.$scrollElement.height();
+
 			var fromDroppable = ui.helper.data("droppable");
 			ui.helper.data("fromDroppable", fromDroppable);
 			this.$(".dragndrop-widget").addClass("dragging");
@@ -162,7 +168,46 @@ define(function(require) {
 		},
 
 		onDrag: function(e, ui) {
+            var top = ui.offset.top;
+            var st = this.$scrollElement.scrollTop();
+            var diff = st - top;
+            if (diff > 0) {
+                this.dragScroll(st, -10, ui);
+            } else if (st + this.winHeight < top + 50) {
+                this.dragScroll(st, 10, ui);
+            } else if (this.isScrolling) {
+                this.cancelDragScroll();
+            }
 		},
+
+        dragScroll: function(st, increment, ui) {
+		    if (this.isScrolling) return;
+		    this.isScrolling = true;
+
+		    var $container = this.$(this.containerClass);
+		    var containerTop = $container.offset().top;
+		    var containerBottom = containerTop + $container.height();
+
+		    this.scrollInterval = setInterval(function() {
+		        var st = this.$scrollElement.scrollTop();
+                var top = ui.helper.offset().top;
+                if (increment > 0) {
+                    if (top >= containerBottom || st + this.winHeight >= containerBottom) {
+                        this.cancelDragScroll();
+                    }
+                } else {
+                    if (top <= containerTop || st <= containerTop) {
+                        this.cancelDragScroll();
+                    }
+                }
+                this.$scrollElement.scrollTop(st + increment);
+            }.bind(this), 32);
+        },
+
+        cancelDragScroll: function() {
+            this.isScrolling = false;
+            clearInterval(this.scrollInterval);
+        },
 
 		onDragStop : function(e, ui) {
 			this.$(".dragndrop-widget").removeClass("dragging");
@@ -183,7 +228,7 @@ define(function(require) {
 			}, 2);
 			setTimeout(function() {
 				ui.helper.removeClass("ui-draggable-dragging");
-			}, this.model.get("animationTime") || 300);
+			}, this.animationTime);
 
 			var userAnswer = this.$currentDraggable.text();
 			this.$currentDroppable.data("userAnswer", userAnswer);
@@ -224,13 +269,9 @@ define(function(require) {
 			this.$currentDroppable = $target;
 		},
 
-		setCurrentDroppable: function() {
-
-		},
-
 		placeDraggable: function($draggable, $droppable, animationTime) {
 
-			if (animationTime === undefined) animationTime = this.model.get("animationTime") || 300;
+			if (animationTime === undefined) animationTime = this.animationTime;
 
 			$draggable.removeClass("ui-state-placed");
 
@@ -257,7 +298,7 @@ define(function(require) {
 		resetDraggable: function($draggable, position, animationTime) {
 			$draggable = $draggable || this.$currentDraggable;
 			position = position || $draggable.data().originalPosition;
-			if (animationTime === undefined) animationTime = this.model.get("animationTime") || 300;
+			if (animationTime === undefined) animationTime = this.animationTime;
 			if ($draggable.data("droppable")) $draggable.data("droppable").addClass("ui-state-enabled");
 
 			$draggable.animate(position, animationTime)
@@ -376,7 +417,7 @@ define(function(require) {
 			var draggables = toReset.concat(toMove, toPlace);
 
 			_.each(draggables, function($, i) {
-				var delay = this.model.get("animationDelay") || 0;
+				var delay = this.animationDelay;
 				var t = i * delay;
 				var that = this;
 				setTimeout(function() {

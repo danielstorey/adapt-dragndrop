@@ -80,24 +80,6 @@
         "translatable": true
       }
     },
-    "animationTime": {
-      "type": "number",
-      "required": true,
-      "default": 1,
-      "title": "Attempts",
-      "inputType": "Number",
-      "validators": ["required", "number"],
-      "help": "Animation time"
-    },
-    "animationDelay": {
-      "type": "number",
-      "required": true,
-      "default": 1,
-      "title": "Attempts",
-      "inputType": "Number",
-      "validators": ["required", "number"],
-      "help": "Animation delay"
-    },
     "_attempts": {
       "type": "number",
       "required": true,

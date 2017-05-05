@@ -26,7 +26,5 @@
         }
 
     ],
-    "dummyAnswers": ["Black", "Brown"],
-    "animationTime": 800,
-    "animationDelay": 100
+    "dummyAnswers": ["Black", "Brown"]
 }
