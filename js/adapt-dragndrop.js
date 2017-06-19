@@ -48,7 +48,7 @@ define(function(require) {
 			var $droppables = this.$(".dragndrop-droppable");
 
 			$draggables.draggable({
-				containment: this.containerClass,
+				containment: this.$(this.containerClass),
 				snap: ".ui-state-enabled",
 				snapMode: "inner",
 				snapTolerance: 12
