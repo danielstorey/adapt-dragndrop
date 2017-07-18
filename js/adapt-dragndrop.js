@@ -1,9 +1,9 @@
-define(function(require) {
-
-	var Adapt = require("coreJS/adapt");
-	var QuestionView = require("coreViews/questionView");
-	var JQueryUI = require("./jquery-ui.min");
-	var TouchPunch = require("./jquery.ui.touch-punch");
+define([
+    "core/js/adapt",
+    "core/js/views/questionView",
+    "./jquery-ui.min",
+    "./jquery.ui.touch-punch"
+], function(Adapt, QuestionView, JQueryUI, TouchPunch) {
 
 	var dragndrop = QuestionView.extend({
 
@@ -159,6 +159,7 @@ define(function(require) {
 			if (!this.model.get("_isEnabled")) return;
 
 			this.winHeight = this.$scrollElement.height();
+			this.navHeight = $(".navigation").height();
 
 			var fromDroppable = ui.helper.data("droppable");
 			ui.helper.data("fromDroppable", fromDroppable);
@@ -170,17 +171,18 @@ define(function(require) {
 		onDrag: function(e, ui) {
             var top = ui.offset.top;
             var st = this.$scrollElement.scrollTop();
-            var diff = st - top;
+            var diff = st - top + this.navHeight;
+
             if (diff > 0) {
-                this.dragScroll(st, -10, ui);
+                this.dragScroll(-10, ui);
             } else if (st + this.winHeight < top + 50) {
-                this.dragScroll(st, 10, ui);
+                this.dragScroll(10, ui);
             } else if (this.isScrolling) {
                 this.cancelDragScroll();
             }
 		},
 
-        dragScroll: function(st, increment, ui) {
+        dragScroll: function(increment, ui) {
 		    if (this.isScrolling) return;
 		    this.isScrolling = true;
 
@@ -188,7 +190,7 @@ define(function(require) {
 		    var containerTop = $container.offset().top;
 		    var containerBottom = containerTop + $container.height();
 
-		    this.scrollInterval = setInterval(function() {
+		    this.scrollInterval = setInterval(_.bind(function() {
 		        var st = this.$scrollElement.scrollTop();
                 var top = ui.helper.offset().top;
                 if (increment > 0) {
@@ -196,12 +198,13 @@ define(function(require) {
                         this.cancelDragScroll();
                     }
                 } else {
-                    if (top <= containerTop || st <= containerTop) {
+                    if (top <= containerTop - this.navHeight || st <= containerTop - this.navHeight) {
                         this.cancelDragScroll();
                     }
                 }
+                ui.helper.css({top: "+=" + increment});
                 this.$scrollElement.scrollTop(st + increment);
-            }.bind(this), 32);
+            }, this), 32);
         },
 
         cancelDragScroll: function() {
@@ -271,23 +274,19 @@ define(function(require) {
 
 		placeDraggable: function($draggable, $droppable, animationTime) {
 
-			if (animationTime === undefined) animationTime = this.animationTime;
+			if (typeof animationTime !== "number") animationTime = this.animationTime;
+		    var animationClass = "dragndrop-transition-" + animationTime;
 
-			$draggable.removeClass("ui-state-placed");
-
-			var dragLeft = $draggable.data("position") ? $draggable.data("position").left : $draggable.offset().left;
-			var dragTop = $draggable.data("position") ? $draggable.data("position").top : $draggable.offset().top;
-			var left = $droppable.offset().left - dragLeft;
-			var top = $droppable.offset().top - dragTop;
-
-			$draggable.animate({left: left, top: top}, animationTime);
+			$draggable.removeClass("ui-state-placed")
+                .addClass(animationClass)
+                .offset($droppable.offset());
 			$droppable.removeClass("ui-state-enabled")
 				.addClass("ui-state-disabled")
 				.data("answer", $draggable.text());
 
 			var that = this;
 			setTimeout(function() {
-				$draggable.addClass("ui-state-placed").data("droppable", $droppable);
+				$draggable.toggleClass("ui-state-placed " + animationClass).data("droppable", $droppable);
 			}, animationTime);
 
 			this.queue = setTimeout(function() {

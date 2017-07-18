@@ -82,22 +82,27 @@
             text-align: center;
             box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
             cursor: move;
-        }
 
-        .dragndrop-answer.ui-draggable-disabled {
-            cursor: default;
-        }
-
-        .dragndrop-answer.ui-draggable-dragging {
-            box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
-            z-index: 12;
-        }
-
-        .dragndrop-answer.ui-state-placed {
-            z-index: 9;
-            background: none;
-            color: @primary-color-inverted;
-            box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+            &.ui-draggable-disabled {
+                cursor: default;
+            }
+            &.ui-draggable-dragging {
+                box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+                z-index: 12;
+            }
+            &.ui-state-placed {
+                z-index: 9;
+                background: none;
+                color: @primary-color-inverted;
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+            }
+            &.ui-state-placing {
+                -webkit-transition: 0.2s;
+                -moz-transition: 0.2s;
+                -ms-transition: 0.2s;
+                -o-transition: 0.2s;
+                transition: 0.2s;
+            }
         }
     }
 
@@ -124,4 +129,28 @@
             display: block;
         }
     }
+}
+
+.dragndrop-transition-0 {
+    -webkit-transition: 0s;
+    -moz-transition: 0s;
+    -ms-transition: 0s;
+    -o-transition: 0s;
+    transition: 0s;
+}
+
+.dragndrop-transition-200 {
+    -webkit-transition: top 0.2s, left 0.6s;
+    -moz-transition: top 0.2s, left 0.6s;
+    -ms-transition: top 0.2s, left 0.6s;
+    -o-transition: top 0.2s, left 0.6s;
+    transition: top 0.2s, left 0.6s;
+}
+
+.dragndrop-transition-600 {
+    -webkit-transition: top 0.6s, left 0.6s;
+    -moz-transition: top 0.6s, left 0.6s;
+    -ms-transition: top 0.6s, left 0.6s;
+    -o-transition: top 0.6s, left 0.6s;
+    transition: top 0.6s, left 0.6s;
 }
