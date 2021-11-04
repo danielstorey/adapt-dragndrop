@@ -1,8 +1,10 @@
-.dragndrop-inner {
+.dragndrop__inner {
 
     position: relative;
 
     .dragndrop-container {
+        display: flex;
+        flex-direction: column;
     }
 
     .dragndrop-overlay {
@@ -16,46 +18,54 @@
         transition: opacity 200ms;
     }
 
-    .dragndrop-widget.dragging .dragndrop-overlay {
+    .dragndrop__widget.dragging .dragndrop-overlay {
         z-index: 10;
         opacity: 0.4;
     }
 
-    .buttons, .dragndrop-item {
+    .btn__container,
+    .dragndrop-item {
         z-index: 11;
     }
 
+    .btn__container.bounceback {
+        display: none !important;
+    }
+
     .dragndrop-questions {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .dragndrop-question {
         position: relative;
-        padding: 20px;
+        padding: 10px;
         margin-bottom: 2px;
-        background: @primary-color;
-        color: @primary-color-inverted;
-        text-align: justify;
+        background: @item-color;
+        color: @item-color-inverted;
+        // text-align: justify;
 
         .dragndrop-question-text {
-            font-size: @body-text-font-size;
-            margin-bottom: 20px;
+            font-size: @body-size;
+            margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .ui-droppable {
             display: inline-block;
             position: relative;
             border: 1px dotted;
-            border-color: @primary-color-inverted;
+            border-color: @item-color-inverted;
             vertical-align: middle;
         }
 
         .ui-droppable.ui-state-active {
-            background-color: @primary-color;
+            background-color: @item-color;
         }
 
         .ui-droppable.ui-state-enabled.ui-state-hover {
-            background-color: lighten(@primary-color, 10%);
+            background-color: lighten(@item-color, 10%);
         }
 
         .ui-droppable.ui-state-disabled {
@@ -74,7 +84,7 @@
     }
 
     .dragndrop-answers {
-
+        
         .dragndrop-answer {
             float: left;
             background: #ddd;
@@ -86,16 +96,19 @@
             &.ui-draggable-disabled {
                 cursor: default;
             }
+
             &.ui-draggable-dragging {
                 box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
                 z-index: 12;
             }
+
             &.ui-state-placed {
                 z-index: 9;
                 background: none;
-                color: @primary-color-inverted;
+                color: @item-color-inverted;
                 box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
             }
+
             &.ui-state-placing {
                 -webkit-transition: 0.2s;
                 -moz-transition: 0.2s;
@@ -111,8 +124,8 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         display: inline-block;
-        padding: 12px 20px;
-        margin: 0 15px 15px 0;
+        padding: 6px 10px;
+        margin: 0 10px 10px 0;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -120,11 +133,12 @@
     }
 }
 
-.dragndrop-widget.show-user-answer {
+.dragndrop__widget.show-user-answer {
     .dragndrop-question {
         &.correct .icon-tick {
             display: block;
         }
+
         &.incorrect .icon-cross {
             display: block;
         }

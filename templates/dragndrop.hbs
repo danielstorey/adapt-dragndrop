@@ -1,6 +1,6 @@
-<div class="dragndrop-inner component-inner">
+<div class="dragndrop__inner component__inner">
     {{> component this}}
-    <div class="dragndrop-widget component-widget {{#unless _isEnabled}} disabled {{#if _isComplete}} complete submitted user {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
+    <div class="dragndrop__widget component__widget {{#unless _isEnabled}} disabled {{#if _isComplete}} is-complete is-submitted show-user-answer {{#if _isCorrect}}is-correct{{/if}} {{/if}} {{/unless}}">
 
         <div class="dragndrop-container">
 
@@ -29,7 +29,7 @@
 
         </div>
 
-        <div class="buttons">
-        </div>
     </div>
+
+    <div class="btn__container" ></div>
 </div>
