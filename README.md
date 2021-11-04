@@ -47,6 +47,6 @@ Not currently responsive
 Viewport sizing
 
 ----------------------------
-**Version number:**  1.0
-**Framework versions:**  2.0
+**Version number:**  1.4.0
+**Framework versions:**  >=5
 **Author / maintainer:** Dan Storey
