@@ -1,8 +1,8 @@
 {
   "name": "adapt-dragndrop",
   "repository": "git://github.com/danielstorey/adapt-dragndrop.git",
-  "framework": ">=5",
-  "version": "1.4.0",
+  "framework": ">=5.14.0",
+  "version": "1.4.1",
   "homepage": "https://github.com/danielstorey/adapt-dragndrop",
   "authors": ["Dan Storey <danielstorey@gmail.com>"],
   "description": "A fully working drag and drop question component. Nice animations when toggling between user/model answer. For framework version 5+.",
